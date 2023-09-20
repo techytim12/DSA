@@ -1,0 +1,79 @@
+Smallest XOR
+
+Problem Description
+Given two integers A and B, find a number X such that A xor X is minimum possible, and the number of set bits in X equals B.
+
+Problem Constraints
+0 <= A <= 109
+0 <= B <= 30
+
+Input Format
+First argument contains a single integer A. Second argument contains a single integer B
+
+Output Format
+Return a single integer X.
+
+Example Input
+Input 1:
+ A = 3
+ B = 3
+Input 2:
+ A = 15
+ B = 2
+
+Example Output
+Output 1:
+ 7
+Output 2:
+ 12
+
+
+Example Explanation
+Explanation 1:
+ 3 xor 7 = 4 which is minimum
+Explanation 2:
+ 15 xor 12 = 3 which is minimum
+ 
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+public class Solution {
+    public int solve(int A, int B) {
+
+        int X = A; //since the least minimum value A^X can get is 0 & that can be acheived if X=A, so initialyy we're assigning like that
+        int setBits = 0;
+
+        // now calculating the no of setbits in A/X
+        while(A>0){
+            if( (A&1) != 0){
+                setBits += 1;
+            }
+            A = A>>1;
+        }
+
+        // if no of setbits in X is < B, we need to make rightmost, LSB 0's to 1 so as to make the XOR value minimum also
+        if(setBits < B){
+            for(int i=0; i<32; i++){
+                if( (X & (1<<i)) == 0){
+                    X = X | (1<<i); // making the unset bit to setbit
+                    setBits += 1;
+                }
+                if(setBits == B){
+                    break;
+                }
+            }
+            // so if no of setbits in X is > B, we need to make rightmost, LSB 1's to 0 so as to make the XOR value minimum also
+        } else if(setBits > B){
+            for(int i=0; i<32; i++){
+                if((X & (1<<i)) != 0){
+                    X = X ^ (1<<i); // making the setbit to unset
+                    setBits -= 1;
+                }
+                if(setBits == B){
+                    break;
+                }
+            }
+        }
+
+        return X;
+    }
+}
