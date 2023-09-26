@@ -1,0 +1,35 @@
+Find All Primes
+
+Problem Description
+Given an integer A. Find the list of all prime numbers in the range [1, A].
+
+++++++++++++++++++++++++++++++++++++++++++++++
+public class Solution {
+    public int[] solve(int N) {
+
+        ArrayList<Integer> lst = new ArrayList<>();
+        boolean[] primes = new boolean[N+1];
+
+        Arrays.fill(primes, true);
+
+        for(int i=2; i*i<=N; i++){
+
+            if(primes[i] == true){
+                for(int j=i*i; j<=N; j=j+i){
+                    primes[j] = false;
+                }
+            }
+        }
+        for(int i=2; i<=N; i++){
+            if(primes[i] == true){
+                lst.add(i);
+            }
+        }
+        int[] ans = new int[lst.size()];
+        for(int i=0; i<lst.size(); i++){
+            ans[i] = lst.get(i);
+        }
+
+        return ans;
+    }
+}
