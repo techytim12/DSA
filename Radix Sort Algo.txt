@@ -1,0 +1,62 @@
+package Advanced;
+
+import java.util.ArrayList;
+
+public class RadixSortAlgo {
+
+    public static void main(String[] args) {
+
+        int[] arr = {364571,43442,14222,7538,5040,12432512,46};
+        radixSort(arr);
+
+        for(int ele : arr){
+            System.out.print(ele+" ");
+        }
+    }
+
+    public static void radixSort(int[] A){
+
+        int max = Integer.MIN_VALUE;
+        for(int ele : A){
+            max = Math.max(max, ele);
+        }
+
+        int count = 0;
+        while(max>0){
+            count += 1;
+            max /= 10;
+        }
+
+        int k = 0;
+        while (count > 0){
+            countSort(A, k);
+            k+=1;
+            count-=1;
+        }
+    }
+
+    private static void countSort(int[] a, int k) {
+
+        ArrayList<ArrayList<Integer>> AL = new ArrayList<>();
+        for(int i=0; i<=9; i++){
+            ArrayList<Integer> lst = new ArrayList<>();
+            AL.add(lst);
+        }
+        int ten = 1;
+        for(int i=1; i<=k; i++){
+            ten = ten*10;
+        }
+        for(int i=0; i<a.length; i++){
+            int val = (a[i]/ten)%10;
+            AL.get(val).add(a[i]);
+        }
+
+        int p = 0;
+        for(int i=0; i<=9; i++){
+            for(int j=0; j<AL.get(i).size(); j++){
+                a[p] = AL.get(i).get(j);
+                p+=1;
+            }
+        }
+    }
+}
