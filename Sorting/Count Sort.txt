@@ -1,0 +1,38 @@
+Count Sort
+
+Given an array A. Sort this array using Count Sort Algorithm and return the sorted array.
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+public class Solution {
+    public int[] solve(int[] A) {
+
+        int N = A.length;
+        int max = 0;
+        
+        //finding max
+        for(int i=0; i<N; i++){
+            max = Math.max(A[i],max);
+        }
+        
+        //initializing freqArr with size max+1
+        int[] freqArr = new int[max+1];
+
+        //filling up freqArr with the frequencies
+        for(int i=0; i<N; i++){
+            freqArr[A[i]]++;
+        }
+
+        //sorting based on the frequencies
+        int j=0;
+        for(int i=0; i<max+1; i++){
+            while(freqArr[i]>0){
+                A[j] = i;
+                freqArr[i]-=1;
+                j+=1;
+            }
+        }
+
+        return A;
+    }
+}
